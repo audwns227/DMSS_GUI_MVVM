@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using DMSS_GUI.Model;
 using DMSS_GUI.command;
+using System.Configuration;
 
 namespace DMSS_GUI.ViewModel
 {
@@ -16,6 +17,7 @@ namespace DMSS_GUI.ViewModel
     {
         private ReceiverModel _receiverA;
         private ReceiverModel _receiverB;
+        private int _diff;
         private string _systemStatus;
         private Brush _statusColor;
         private bool _isManualMode;
@@ -34,6 +36,11 @@ namespace DMSS_GUI.ViewModel
             set { _receiverB = value; OnPropertyChanged(nameof(ReceiverB)); }
         }
 
+        public int Diff
+        {
+            get => _diff;
+            set { _diff = value; OnPropertyChanged("diff"); }
+        }
         public string SystemStatus
         {
             get => _systemStatus;
@@ -98,9 +105,6 @@ namespace DMSS_GUI.ViewModel
                 SystemStatus = "발사 실패!";
                 StatusColor = Brushes.Red;
             }
-
-            ReceiverA.SignalStrength = new Random().Next(30, 100);
-            ReceiverB.SignalStrength = new Random().Next(10, 80);
         }
 
         private void ChangeMode(object parameter)

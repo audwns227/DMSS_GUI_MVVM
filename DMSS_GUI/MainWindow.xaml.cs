@@ -18,11 +18,22 @@ namespace DMSS_GUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainViewModel _viewModel;
+        private SerialDataReceiver _receiver;
 
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainViewModel(); // ViewModel을 DataContext로 설정
+            _viewModel = new MainViewModel();
+            DataContext = _viewModel; // ViewModel을 DataContext로 설정
+
+            _receiver = new SerialDataReceiver(_viewModel);
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            _receiver.Close();
+            base.OnClosed(e);
         }
     }
 }
